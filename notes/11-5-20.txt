@@ -1,0 +1,27 @@
+tjkr0wn:
+
+Well here we are.
+
+I guess my entrypoint is to fresh up on some SPI documentation/basics. I already found a pretty good basic wikipedia article. Link below.
+I remember reading somewhere that there is a huge list of documented and known GPIO pins and what they do. I'll try to find that as it
+may be useful for obvious reasons. 
+
+I'd assume that the SPI interface, specifically MOSI and MISO lines of the interface, use something similar to I2C where bits are sent one
+at a time, eventually sending the whole bit by a shift register.
+
+By reversing some code, it seems that the SPI driver implemented by iBoot is using a one-byte shift register. It also seems like the SPI
+supports DMAs from the slaves?
+
+There's some hints that the SPI has something to do with IRQs. Not sure if this means it's IRQ driven.
+
+Some interesting startup functions to look at that may interest us that need to be reverse:
+
+platform_init_setup_clocks()
+platform_init_hwpins()
+platform_early_init()
+platform_init()
+
+
+Links:
+
+SPI Basics: https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#Applications
