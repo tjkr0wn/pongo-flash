@@ -1,7 +1,7 @@
-asm(".section .text\n");
-extern void * _init(void);
+asm(".text\n");
+extern long init(void);
 
-int main(void) {
-  int image_info = _init();
+long read_blockdev(void) {
+  long image_info = init();
   return image_info;
 }

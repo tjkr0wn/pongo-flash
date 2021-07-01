@@ -15,29 +15,36 @@ _init:
   mov     w26,#0x1c0000
   movk    w26,#0x8000
   mov     w27,#0xb
-  adr     x21,0x100017241
+  mov     x21, 29249
+  movk    x21, 0x1, lsl 16
+  movk    x21, 0x1, lsl 32
   nop
 
   add     x1, sp, #0x8
   add     x2, sp, #0x4
   mov     x3, sp
   mov     x0,x19
-  bl      =platform_get_boot_device
+  ldr     x18, =platform_get_boot_device
+  blr     x18
   cbz     w0, exit
   ldp     w25,w22,[sp, #0x4]
   ldr     w23,[sp]
   mov     w0,#0x1
   mov     x1,x22
   mov     x2,x23
-  bl      =platform_enable_boot_interface
+  ldr     x18, =platform_enable_boot_interface
+  blr      x18
   mov     w0, #0x1
-  bl      =security_init
+  ldr     x18, =security_init
+  blr      x18
   mov     w28, #0x696c0000
   movk    w28, #0x6c62
   mov     x0,x23
-  bl      =flash_nor_init
+  ldr     x18, =flash_nor_init
+  blr      x18
   mov     x0, x21
-  bl      =lookup_image_in_bdev
+  ldr     x18, =lookup_image_in_bdev
+  blr      x18
 
 
 exit:
