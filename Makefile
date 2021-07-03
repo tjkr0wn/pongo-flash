@@ -1,5 +1,6 @@
 #TODO: Make this more extensible/cover more targets
 OBJCOPY							= objcopy
+C_FLAGS							= -e _read_blockdev -static -target arm64-apple-darwin -ffreestanding -Wall -nostdlib -fno-stack-protector
 
 ifndef $(HOST_OS)
 	ifeq ($(OS),Windows_NT)
@@ -11,19 +12,18 @@ endif
 
 ifeq ($(HOST_OS),Linux)
 	CC 									= clang
-	C_FLAGS							= -e _read_blockdev -static -target arm64-apple-darwin -ffreestanding -Wall -nostdlib -fno-stack-protector
 	LD_FLAGS 						= -fuse-ld=/usr/bin/ld64
 endif
 
 ifeq ($(HOST_OS),Darwin)
 	CC									= xcrun -sdk $(iphoneos) clang
-	C_FLAGS							= -e _read_blockdev -static -target arm64-apple-darwin -lSystem -ffreestanding -Wall -nostdlib -fno-stack-protector
 	LD_FLAGS						=
 endif
 
 SRC_CORE_TESTS			= core/tests/init.S
 
 SRC_MAIN_TESTS			= tests/read_blockdev.c
+
 OBJ_MAIN_TESTS			= main_test.o
 BIN_MAIN_TESTS			= main_test.bin
 
