@@ -27,7 +27,7 @@ _init:
   mov     x0,x19
   ldr     x18, =platform_get_boot_device
   blr     x18
-  cbz     w0, exit
+  cbz     w0, fail
   ldp     w25,w22,[sp, #0x4]
   ldr     w23,[sp]
   mov     w0,#0x1
@@ -47,6 +47,8 @@ _init:
   ldr     x18, =lookup_image_in_bdev
   blr     x18
 
+fail:
+  mov     x0, #0x41
 
 exit:
   ldr     x30, [sp, #0x10]
