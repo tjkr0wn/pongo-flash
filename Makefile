@@ -30,5 +30,5 @@ BIN_MAIN_TESTS			= main_test.bin
 
 main_tests:
 	$(CC) $(C_FLAGS) $(LD_FLAGS) $(SRC_MAIN_TESTS) $(SRC_CORE_TESTS) -o $(OBJ_MAIN_TESTS)
-	$(OBJCOPY) -O binary -j __TEXT,__binbase $(OBJ_MAIN_TESTS) $(BIN_MAIN_TESTS)
+	$(OBJCOPY) -O binary -j .text $(OBJ_MAIN_TESTS) $(BIN_MAIN_TESTS)
 	rm $(OBJ_MAIN_TESTS)

@@ -1,4 +1,4 @@
-.section __TEXT,__binbase
+.text
 
 .pool
 .set platform_get_boot_device, 0x10000796c

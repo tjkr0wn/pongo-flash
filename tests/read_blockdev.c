@@ -1,4 +1,4 @@
-asm(".section __TEXT,__binbase\n");
+asm(".text\n");
 extern long init(void);
 
 long read_blockdev(void) {
