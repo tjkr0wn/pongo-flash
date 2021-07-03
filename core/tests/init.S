@@ -9,7 +9,8 @@
 
 .globl _init
 _init:
-  str     x30, [sp, #0x50]
+  sub     sp, sp, #0x20
+  str     x30, [sp, #0x10]
   mov     w0, #0x0
   sbfx    w19,w0,#0x0,#0x1
   mov     w26,#0x1c0000
@@ -33,20 +34,21 @@ _init:
   mov     x1,x22
   mov     x2,x23
   ldr     x18, =platform_enable_boot_interface
-  blr      x18
+  blr     x18
   mov     w0, #0x1
   ldr     x18, =security_init
-  blr      x18
+  blr     x18
   mov     w28, #0x696c0000
   movk    w28, #0x6c62
   mov     x0,x23
   ldr     x18, =flash_nor_init
-  blr      x18
+  blr     x18
   mov     x0, x21
   ldr     x18, =lookup_image_in_bdev
-  blr      x18
+  blr     x18
 
 
 exit:
-  ldr x30, [sp, #0x50]
+  ldr     x30, [sp, #0x10]
+  add     sp, sp, #0x20
   ret
