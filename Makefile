@@ -1,6 +1,6 @@
 #TODO: Make this more extensible/cover more targets
-OBJCOPY							= objcopy
-C_FLAGS							= -e _read_blockdev -static -target arm64-apple-darwin -ffreestanding -Wall -nostdlib -fno-stack-protector
+OBJCOPY = objcopy
+C_FLAGS = -e _read_blockdev -static -target arm64-apple-darwin -ffreestanding -Wall -nostdlib -fno-stack-protector
 
 ifndef $(HOST_OS)
 	ifeq ($(OS),Windows_NT)
@@ -11,23 +11,23 @@ ifndef $(HOST_OS)
 endif
 
 ifeq ($(HOST_OS),Linux)
-	CC 									= clang
-	LD_FLAGS 						= -fuse-ld=/usr/bin/ld64
+	CC = clang
+	LD_FLAGS = -fuse-ld=/usr/bin/ld64
 endif
 
 ifeq ($(HOST_OS),Darwin)
-	CC									= xcrun -sdk $(iphoneos) clang
-	LD_FLAGS						=
+	CC = xcrun -sdk $(iphoneos) clang
+	LD_FLAGS =
 endif
 
-SRC_CORE_TESTS			= core/tests/init.S
+SRC_CORE_TESTS = core/tests/init.S
 
-SRC_MAIN_TESTS			= tests/read_blockdev.c
+SRC_MAIN_TESTS = tests/read_blockdev.c
 
-OBJ_MAIN_TESTS			= main_test.o
-BIN_MAIN_TESTS			= main_test.bin
+OBJ_MAIN_TESTS = main_test.o
+BIN_MAIN_TESTS = main_test.bin
 
-LD_FLAGS						+= -Wl,-image_base,0x1800b0800
+LD_FLAGS += -Wl,-image_base,0x180018620
 
 main_tests:
 	$(CC) $(C_FLAGS) $(LD_FLAGS) $(SRC_MAIN_TESTS) $(SRC_CORE_TESTS) -o $(OBJ_MAIN_TESTS)

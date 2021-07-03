@@ -19,8 +19,6 @@ _init:
   mov     x21, 29249
   movk    x21, 0x1, lsl 16
   movk    x21, 0x1, lsl 32
-  nop
-
   add     x1, sp, #0x8
   add     x2, sp, #0x4
   mov     x3, sp
@@ -46,6 +44,7 @@ _init:
   mov     x0, x21
   ldr     x18, =lookup_image_in_bdev
   blr     x18
+  b       exit
 
 fail:
   mov     x0, #0x41
