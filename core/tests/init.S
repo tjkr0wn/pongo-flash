@@ -6,6 +6,10 @@
 .set security_init, 0x100009b14
 .set flash_nand_init, 0x100003a84
 .set lookup_image_in_bdev, 0x100001a4c
+.set flash_nand_register, 0x10000c7fc
+.set flash_nand_read_range, 0x100003bb0
+.set flash_nand_write_range, 0x100003e44
+.set blockdev_read, 0x10000e9d0
 
 .globl _init
 _init:
