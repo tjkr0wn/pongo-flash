@@ -1,3 +1,4 @@
+asm(".space 0x620, 0x0\n\t");
 asm(".text\n");
 extern long init(void);
 
