@@ -32,4 +32,5 @@ LD_FLAGS += -Wl,-image_base,0x180018000
 main_tests:
 	$(CC) $(C_FLAGS) $(LD_FLAGS) $(SRC_MAIN_TESTS) $(SRC_CORE_TESTS) -o $(OBJ_MAIN_TESTS)
 	$(OBJCOPY) -O binary -j .text $(OBJ_MAIN_TESTS) $(BIN_MAIN_TESTS)
+	dd if=$(BIN_MAIN_TESTS) of=$(BIN_MAIN_TESTS).final bs=1 skip=1568
 	rm $(OBJ_MAIN_TESTS)
