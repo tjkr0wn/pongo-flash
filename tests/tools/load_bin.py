@@ -17,4 +17,4 @@ with open(sys.argv[1], "rb") as f:
     dev.write_memory(0x180018620, f.read())
     dump = dev.read_memory(0x180018620, 0x800)
     print utilities.hex_dump(dump, 0x180018620)
-    print([hex(i) for i in dev.execute(0, 0x180018620)])
+    print(hex(dev.execute(0, 0x180018620)[0]))

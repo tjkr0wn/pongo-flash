@@ -7,8 +7,8 @@
 .set flash_nand_init, 0x100003a84
 .set lookup_image_in_bdev, 0x100001a4c
 .set flash_nand_register, 0x10000c7fc
-.set flash_nand_read_range, 0x100003bb0
-.set flash_nand_write_range, 0x100003e44
+.set flash_nand_readRange, 0x100003bb0
+.set flash_nand_writeRange, 0x100003e44
 .set blockdev_read, 0x10000e9d0
 
 .globl _init
@@ -28,9 +28,6 @@ _init:
   mov     x1,x22
   mov     x2,x23
   ldr     x29, =platform_enable_boot_interface
-  blr     x29
-  mov     w0,#0x1
-  ldr     x29, =security_init
   blr     x29
   mov     w28,#0x696c0000
   movk    w28,#0x6c62
