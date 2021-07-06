@@ -52,7 +52,7 @@ exit:
   mov     x2,x23
   ldr     x29, =platform_enable_boot_interface
   blr     x29
-  movk    x0, x28
+  mov     x0, x28
   ldp     x30, x29, [sp, #0x10]
   add     sp, sp, #0x20
   ret
