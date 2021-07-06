@@ -46,11 +46,13 @@ fail:
   mov     x0, #0x41
 
 exit:
+  mov     x28, x0
   mov     w0,#0x0
   mov     x1,x22
   mov     x2,x23
   ldr     x29, =platform_enable_boot_interface
   blr     x29
+  movk    x0, x28
   ldp     x30, x29, [sp, #0x10]
   add     sp, sp, #0x20
   ret
