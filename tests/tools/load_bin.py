@@ -1,11 +1,8 @@
 #!/usr/bin/python2.7
 
+import sys, time, struct
+import dfu, utilities
 import usbexec
-import dfu
-import sys
-import time
-import utilities
-import struct
 
 device = dfu.acquire_device()
 if not device:
