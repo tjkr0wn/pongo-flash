@@ -1,0 +1,1 @@
+tests/tools/reloc_load_script.sh
