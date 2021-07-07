@@ -20,7 +20,3 @@ with open(sys.argv[1], "rb") as f:
     dump = dev.read_memory(0x180018620, 0x800)
     print utilities.hex_dump(dump, 0x180018620)
     print(hex(dev.execute(0, 0x180018620)[0]))
-
-device = dfu.acquire_device()
-dfu.send_data(device, "A" * 24)
-dfu.release_device(device)

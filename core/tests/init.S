@@ -13,7 +13,7 @@
 
 .globl _init
 _init:
-  sub     sp, sp, #0x20
+  sub     sp, sp, #0x30
   stp     x30, x29, [sp, #0x10]
   add     x1,sp,#0x8
   add     x2,sp,#0x4
@@ -27,6 +27,7 @@ _init:
   mov     w0,#0x1
   mov     x1,x22
   mov     x2,x23
+  stp     x1, x2, [sp, #0x20]
   ldr     x29, =platform_enable_boot_interface
   blr     x29
   mov     w28,#0x696c0000
@@ -37,7 +38,7 @@ _init:
   mov	    x0, #0x7246
   movk	  x0, #0x1, lsl #16
   movk	  x0, #0x1, lsl #32
-  mov     w1, w28 //Doesn't really matter, lookup_image_in_bdev hardcodes to illb anyways
+  mov     w1, w28           /* Doesn't really matter, lookup_image_in_bdev hardcodes to illb anyways */
   ldr     x29, =lookup_image_in_bdev
   blr     x29
   cbnz    x0, exit
@@ -48,11 +49,10 @@ fail:
 exit:
   mov     x28, x0
   mov     w0,#0x0
-  mov     x1,x22
-  mov     x2,x23
+  ldp     x1, x2, [sp, #0x20]
   ldr     x29, =platform_enable_boot_interface
   blr     x29
   mov     x0, x28
   ldp     x30, x29, [sp, #0x10]
-  add     sp, sp, #0x20
+  add     sp, sp, #0x30
   ret
