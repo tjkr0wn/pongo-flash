@@ -8,6 +8,10 @@
 
 --This driver aims to bring a stable and easy interface with Apple's SPI to pongoOS, and even builds on this SPI layer to interface with the NAND chip present on pongoOS devices (if applicable).
 
+`How is this driver being developed?`
+
+--I am reverse engineering the secureROM of an iPhone to analyze and identify important functions and data structures that will be necessary to successfully operate this driver. A systematic approach is being taken by reversing and taking bits of the driver present in the ROM, running them, identifying potential issues, and reimplementing them to be suitable for a pongoOS driver.
+
 `Can I run this code?`
 
 --Unless you are 100% sure you know what you're doing: **DO NOT RUN THIS CODE**. This is meant for development of the driver until there is an official announcement or this README says otherwise. Everything in here is not guaranteed to behave/work properly on everyone's device.
