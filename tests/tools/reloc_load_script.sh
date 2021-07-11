@@ -1,4 +1,3 @@
-#!/usr/bin/env zsh
 set -e
 
 PWD="$(pwd)"
@@ -12,5 +11,5 @@ cp ../load_bin.py load_bin.py
 BIN=$(readlink -f ../../../main_test.bin.final)
 echo ${BIN}
 python2.7 ipwndfu -p
-python2.7 load_bin.py ${BIN}
+python2.7 load_bin.py ${BIN} $1
 cd ${PWD}

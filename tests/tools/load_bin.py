@@ -2,19 +2,45 @@
 
 import sys, time, struct
 import dfu, utilities
+from SecureDBG import start_securedbg
+
+def print_response(r):
+    o = str()
+    for i in r:
+        o = o + chr(i)
+    print(o)
 
 device = dfu.acquire_device()
 
-if not device:
-    quit("Couldn't get device handle")
+if not device: quit("Couldn't get device handle")
 
 print("We aren't hosed...")
 
 with open(sys.argv[1], "rb") as f:
-    dfu.send_data(device, "A" * 41)
+    try:
+        if sys.argv[2] == "0":
+            start_securedbg()
+    except: pass
+    
     time.sleep(1)
-    response = device.ctrl_transfer(0xa1, 2, 0x4001, 0, 0, 10000)
-    print(response)
-    print(bytearray(response))
+    dfu.send_data(device, f.read())
+
+    time.sleep(1)
+
+    response = device.ctrl_transfer(0xa1, 2, 0x4001, 0, 0x800, 10000)
+    print_response(response)
+
+while True:
+    try:
+        time.sleep(2)
+
+        response = device.ctrl_transfer(0xa1, 2, 0x4000, 0, 0x800, 5000)
+        print_response(response)
+
+    except KeyboardInterrupt:
+        break
+
+    except:
+        print("No logs received")
 
 dfu.release_device(device)
