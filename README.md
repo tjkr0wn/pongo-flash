@@ -23,3 +23,5 @@
 `Why is this driver useful?`
 
 --This driver is mostly a fun summer project for me, but it can prove to be extremely useful. Things like loading kexts from Cydia can be possible, or providing an easy way for others to have a deeper look into the NAND chip on an Apple device.
+
+Thanks to @jsherman212 and @Cryptiiiic for their helping hands!

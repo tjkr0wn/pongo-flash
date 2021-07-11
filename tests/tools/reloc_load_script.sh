@@ -3,8 +3,9 @@ set -e
 
 PWD="$(pwd)"
 DIR="$(dirname $(readlink $0))"
-git submodule init
-git submodule update --recursive
+echo ${DIR}
+#git submodule init
+#git submodule update --recursive
 cd ${DIR}/ipwndfu
 rm -rf load_bin.py
 cp ../load_bin.py load_bin.py
