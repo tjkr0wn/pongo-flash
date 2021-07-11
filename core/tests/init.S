@@ -35,10 +35,13 @@ _init:
   mov     x0,x23
   ldr     x29, =flash_nand_init
   blr     x29
-  mov	    x0, #0x7246
+  mov     x0, #0x7246
   movk	  x0, #0x1, lsl #16
   movk	  x0, #0x1, lsl #32
-  mov     w1, w28           /* Doesn't really matter, lookup_image_in_bdev hardcodes to illb anyways */
+
+  /* Doesn't really matter, lookup_image_in_bdev hardcodes to illb anyways */
+  mov     w1, w28
+
   ldr     x29, =lookup_image_in_bdev
   blr     x29
   cbnz    x0, exit
