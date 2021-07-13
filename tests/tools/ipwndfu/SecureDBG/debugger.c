@@ -50,7 +50,6 @@ enum {
 };
 
 static bool is_SecureDBG_request(uint16_t req){
-    dbglog("%s: Entered.\n", __func__);
     return req >= SecureDBG_LOG_READ && req < SecureDBG_MAXREQ;
 }
 
@@ -64,8 +63,6 @@ static int SecureDBG_usb_interface_request_handler(struct usb_request_packet *re
 
     if(!is_SecureDBG_request(request))
         return ipwndfu_usb_interface_request_handler(req, bufout);
-
-    dbglog("Got SecureDBG_request\n");
 
     if(request == SecureDBG_LOG_READ){
         /* dbglog("%s: sending back log (bufout=%#llx)...\n", __func__, */
@@ -84,9 +81,10 @@ static int SecureDBG_usb_interface_request_handler(struct usb_request_packet *re
     }
     else if (request == SecureDBG_EXECUTE){
       dbglog("Got SecureDBG_EXECUTE\n");
-      long (* exec)(void (*print_log)(const char *fmt, ...)) = pongo_flash_code_dump_region;
+      long (* exec)(uintptr_t log) = pongo_flash_code_dump_region;
       aop_sram_memcpy(pongo_flash_code_dump_region, io_buffer, 0x800);
-      long retval = exec(dbglog);
+      uintptr_t log = &dbglog;
+      long retval = exec(log);
       usb_core_do_io(0x80, retval, sizeof(long), NULL);
     }
 
@@ -107,7 +105,7 @@ uint64_t debugger_entryp(void){
 
     *(uint64_t *)usb_interface_request_handler = (uint64_t)SecureDBG_usb_interface_request_handler;
 
-    dblog("Installed USB handler\n");
+    dbglog("Installed USB handler\n");
 
     debuggee_cpu = curcpu();
 

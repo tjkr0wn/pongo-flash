@@ -10,11 +10,18 @@
 .set flash_nand_readRange, 0x100003bb0
 .set flash_nand_writeRange, 0x100003e44
 .set blockdev_read, 0x10000e9d0
+.set iboot_vers_string, 0x100000280
 
 .globl _init
 _init:
   sub     sp, sp, #0x30
   stp     x30, x29, [sp, #0x10]
+
+  /* This will tell us if the execute command was successful */
+  mov     x1, x0
+  ldr     x0, =iboot_vers_string
+  blr     x1
+
   add     x1,sp,#0x8
   add     x2,sp,#0x4
   mov     x3,sp

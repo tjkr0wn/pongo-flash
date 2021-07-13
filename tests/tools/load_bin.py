@@ -21,7 +21,7 @@ with open(sys.argv[1], "rb") as f:
         if sys.argv[2] == "0":
             start_securedbg()
     except: pass
-    
+
     time.sleep(1)
     dfu.send_data(device, f.read())
 
