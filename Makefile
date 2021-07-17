@@ -1,8 +1,13 @@
 #TODO: Make this more extensible/cover more targets
 C_FLAGS = -e _read_blockdev -static -target arm64-apple-darwin -ffreestanding -Wall -nostdlib -fno-stack-protector
 
+PLATFORM = T8015
 
-SRC_CORE_TESTS = core/tests/init.S
+SRC_CORE_TESTS = core/$(PLATFORM)/tests/init.S
+
+SRC_CORE_FLASH_NAND = core/$(PLATFORM)/tests/flash_nand/nand.c
+
+SRC_CORE_TESTS += $(SRC_CORE_FLASH_NAND)
 
 SRC_MAIN_TESTS = tests/read_blockdev.c
 
