@@ -11,6 +11,10 @@ SRC_CORE_TESTS += $(SRC_CORE_FLASH_NAND)
 
 SRC_MAIN_TESTS = tests/read_blockdev.c
 
+INCLUDE = include
+
+C_FLAGS += -I$(INCLUDE)
+
 OBJ_MAIN_TESTS = main_test.o
 BIN_MAIN_TESTS = main_test.bin
 

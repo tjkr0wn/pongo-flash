@@ -11,18 +11,27 @@ STATUS: DEVELOPMENT
 #ifndef NAND_H
 #define NAND_H
 
-/* NO STUB */
+#include <sys/types.h>
+#include <stdint.h>
+
+/* NO IMPL */
 #define calloc ((void *(*)(size_t, size_t))0x10000d238)
 #define free ((void (*)(void *))0x10000d2e4)
 
-/* STUB NEEDED */
-#define platform_get_spi_frequency ((uint32_t(*)(void))0x100007b28)
-#define flash_nand_init_gpio ((int(*)(void))0x1000075cc)
+/* IMPL NEEDED */
+#define platform_get_spi_frequency ((uint32_t (*)(void))0x100007b28)
+#define flash_nand_init_gpio ((int (*)(void))0x1000075cc)
+#define lookup_image_in_bdev ((struct image_info * (*)(char *, uint32_t))0x100001a4c)
+#define nand_read_block_hook ((int (*)(struct spi_nanddev *, void *, uint32_t, uint32_t))0x100003e44)
   /* UNKNOWN */
-  #define flash_spi_read_wrapper_unknown ((int(*)((struct spi_nanddev *, uint32_t *, uint32_t *))0x100003c8c)
-#define nand_readRange ((int(*)(struct spi_nanddev *, void *, uint32_t, uint32_t))0x1000075cc)
-#define construct_blockdev ((int(*)(struct blockdev *, char *, uint64_t, uint32_t))0x10000c7fc)
-#define register_blockdev ((int(*)(struct blockdev *))0x10000c690)
+  #define flash_spi_read_wrapper_unknown ((int (*)(struct spi_nanddev *, uint32_t *, uint32_t *))0x100003c8c)
+#define nand_readRange ((int (*)(struct spi_nanddev *, void *, uint32_t, uint32_t))0x1000075cc)
+#define construct_blockdev ((int (*)(struct blockdev *, char *, uint64_t, uint32_t))0x10000c7fc)
+#define register_blockdev ((int (*)(struct blockdev *))0x10000c690)
+
+
+/* IMPL */
+int flash_nand_init(int which_device);
 
 /*
   pongo-flash/decomple/spi_headers.h
