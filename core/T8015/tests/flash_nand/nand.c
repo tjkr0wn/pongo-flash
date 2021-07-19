@@ -10,9 +10,7 @@ STATUS: DEVELOPMENT
 
 /* TODO COUNT: 1 */
 #include <nand.h>
-
-
-int flash_nand_init(int which_device);
+#include <stddef.h>
 
 int flash_nand_init(int which_device)
 {
@@ -43,9 +41,10 @@ int flash_nand_init(int which_device)
           dev->blockCount = local_40;
           dev->flags = 0;
           (dev->sdev).handle = (uintptr_t) dev;
-          (dev->sdev).readRange_callback = nand_readRange;
-          construct_blockdev((struct blockdev *)dev, platform_nand_image_device, (local_40 << 0xc), 0x1000);
-          (dev->sdev).bdev.read_block_hook_callback = nand_read_block_hook;
+          (dev->sdev).readRange = nand_readRange;
+          char *blockdev_name = 0x100017246;
+          construct_blockdev((struct blockdev *)dev, blockdev_name, (local_40 << 0xc), 0x1000);
+          (dev->sdev).bdev.read_block_hook = nand_read_block_hook;
           register_blockdev((struct blockdev *)dev);
           uVar4 = 0;
           goto exit;
@@ -53,8 +52,7 @@ int flash_nand_init(int which_device)
       }
     }
   }
-
-  free(dev);
+  if (dev) free(dev);
   uVar4 = 0xffffffff;
 
   exit:

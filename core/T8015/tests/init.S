@@ -20,39 +20,20 @@ STATUS: DEVELOPMENT
 .globl _platform_prep_nand_stack_init
 .globl _disable_boot_interface
 
-/*
 _disable_boot_interface:
-  mov     w28,#0x696c0000
-  movk    w28,#0x6c62
-  mov     x0, #0x7246
-  movk	  x0, #0x1, lsl #16
-  movk	  x0, #0x1, lsl #32
-
-  /* Doesn't really matter, lookup_image_in_bdev hardcodes to illb anyways */
-  mov     w1, w28
-
-  ldr     x29, =lookup_image_in_bdev
-  blr     x29
-  cbnz    x0, exit
-
-fail:
-  mov     x0, #0x41
-
-exit:
-  mov     x28, x0
-  mov     w0,#0x0
-  ldp     x1, x2, [sp, #0x20]
+  sub     sp, sp, #0x8
+  str     x29, [sp]
   ldr     x29, =platform_enable_boot_interface
   blr     x29
-  mov     x0, x28
-  ldp     x30, x29, [sp, #0x10]
-  add     sp, sp, #0x30
+  ldr     x29, [sp]
+  add     sp, sp, #0x8
   ret
-*/
 
 _platform_prep_nand_stack_init:
-  sub     sp, sp, #0x30
+  sub     sp, sp, #0x40
   stp     x30, x29, [sp, #0x10]
+  stp     x1, x2, [sp, #0x30]
+
 
   /* This will tell us if the execute command was successful */
   mov     x1, x0
@@ -74,7 +55,12 @@ _platform_prep_nand_stack_init:
   stp     x1, x2, [sp, #0x20]
   ldr     x29, =platform_enable_boot_interface
   blr     x29
-  mov     x0, x23
+  ldp     x2, x3, [sp, #0x20]
+  ldp     x0, x1, [sp, #0x30]
+  str     x2, [x0]
+  str     x3, [x1]
+  mov     x0, #0x0
+
   b       exit
 
 fail:
@@ -82,5 +68,5 @@ fail:
 
 exit:
   ldp     x30, x29, [sp, #0x10]
-  add     sp, sp, #0x30
+  add     sp, sp, #0x40
   ret

@@ -9,18 +9,29 @@ STATUS: DEVELOPMENT
 */
 
 #include <stdint.h>
+#include <stdbool.h>
+#include <nand.h>
 asm(".space 0x620, 0x0\n\t");
 asm(".text\n");
 
-extern uint64_t _platform_prep_nand_stack_init(uintptr_t log);
-extern int flash_nand_init(int which_device);
+extern uint64_t platform_prep_nand_stack_init(uintptr_t log, void *boot_device, uint32_t *boot_arg);
+extern void disable_boot_interface(bool enable, int boot_device, uint32_t boot_arg);
 
-uint32_t read_blockdev(uintptr_t log) {
-  uint64_t boot_arg = platform_prep_nand_stack_init(log);
-  if (flash_nand_init(boot_arg) != 0) {
+struct image_info * read_blockdev(uintptr_t log) {
+  int boot_device = 0;
+  uint32_t boot_arg = 0;
+  int ok = -1;
+
+  ok = platform_prep_nand_stack_init(log, &boot_device, &boot_arg);
+
+  if (ok != 0 || flash_nand_init(boot_arg) != 0) {
     return 0x41;
   }
-  
 
-  return image_info;
+  char *blockdev_name = 0x100017246;
+  uint32_t type = "illb";
+  struct image_info * illb = lookup_image_in_bdev(blockdev_name, type);
+  disable_boot_interface(false, boot_device, boot_arg);
+
+  return illb;
 }
