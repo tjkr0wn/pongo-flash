@@ -63,4 +63,3 @@ def start_securedbg():
 
         offset += cursendsz
         tosend -= cursendsz
-    print("Inited")

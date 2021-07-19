@@ -84,8 +84,8 @@ static int SecureDBG_usb_interface_request_handler(struct usb_request_packet *re
       long (* exec)(uintptr_t log) = pongo_flash_code_dump_region;
       aop_sram_memcpy(pongo_flash_code_dump_region, io_buffer, 0x800);
       uintptr_t log = &dbglog;
-      long retval = exec(log);
-      usb_core_do_io(0x80, retval, sizeof(long), NULL);
+      uintptr_t retval = exec(log);
+      usb_core_do_io(0x80, retval, 0x10, NULL);
     }
 
     return 0;
