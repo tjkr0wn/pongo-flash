@@ -7,9 +7,6 @@ Written by: Tarek Joumaa (tjkr0wn)
 STATUS: DEVELOPMENT
 
 */
-#include <image.h>
-#ifndef IMAGE_H
-#define IMAGE_H
 
 struct image_info {
   uint32_t imageLength;
@@ -19,5 +16,3 @@ struct image_info {
   uint32_t imageOptions;
   void *imagePrivate;
 };
-
-#endif

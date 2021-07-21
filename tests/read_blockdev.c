@@ -17,7 +17,7 @@ asm(".text\n");
 extern uint64_t platform_prep_nand_stack_init(uintptr_t log, void *boot_device, uint32_t *boot_arg);
 extern void disable_boot_interface(bool enable, int boot_device, uint32_t boot_arg);
 
-struct image_info * read_blockdev(uintptr_t log) {
+struct image_info *read_blockdev(uintptr_t log) {
   int boot_device = 0;
   uint32_t boot_arg = 0;
   int ok = -1;
@@ -27,10 +27,8 @@ struct image_info * read_blockdev(uintptr_t log) {
   if (ok != 0 || flash_nand_init(boot_arg) != 0) {
     return 0x41;
   }
-
-  char *blockdev_name = 0x100017246;
-  uint32_t type = "illb";
-  struct image_info * illb = lookup_image_in_bdev(blockdev_name, type);
+  uint32_t type = (uint32_t) "illb";
+  struct image_info * illb = lookup_image_in_bdev(platform_blockdev_name, type);
   disable_boot_interface(false, boot_device, boot_arg);
 
   return illb;

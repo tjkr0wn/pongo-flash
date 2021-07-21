@@ -8,11 +8,10 @@ STATUS: DEVELOPMENT
 
 */
 
-#ifndef NAND_H
-#define NAND_H
-
 #include <sys/types.h>
 #include <stdint.h>
+
+char *platform_blockdev_name = NULL;
 
 /* NO IMPL */
 #define calloc ((void *(*)(size_t, size_t))0x10000d238)
@@ -75,5 +74,3 @@ struct spi_nanddev {
     uint32_t defaultTimeout;
     uint32_t some_field7;
 };
-
-#endif

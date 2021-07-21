@@ -11,6 +11,9 @@ STATUS: DEVELOPMENT
 /* TODO COUNT: 1 */
 #include <nand.h>
 #include <stddef.h>
+#include <string.h>
+#include <T8015.h>
+
 
 int flash_nand_init(int which_device)
 {
@@ -42,12 +45,15 @@ int flash_nand_init(int which_device)
           dev->flags = 0;
           (dev->sdev).handle = (uintptr_t) dev;
           (dev->sdev).readRange = nand_readRange;
-          char *blockdev_name = 0x100017246;
-          construct_blockdev((struct blockdev *)dev, blockdev_name, (local_40 << 0xc), 0x1000);
-          (dev->sdev).bdev.read_block_hook = nand_read_block_hook;
-          register_blockdev((struct blockdev *)dev);
-          uVar4 = 0;
-          goto exit;
+          platform_blockdev_name = (char *) malloc(strlen(SPI_NAND0));
+          strcpy(platform_blockdev_name, SPI_NAND0);
+          if (platform_blockdev_name != NULL) {
+            construct_blockdev((struct blockdev *)dev, platform_blockdev_name, (local_40 << 0xc), 0x1000);
+            (dev->sdev).bdev.read_block_hook = nand_read_block_hook;
+            register_blockdev((struct blockdev *)dev);
+            uVar4 = 0;
+            goto exit;
+          }
         }
       }
     }

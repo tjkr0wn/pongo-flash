@@ -13,7 +13,9 @@ SRC_MAIN_TESTS = tests/read_blockdev.c
 
 INCLUDE = include
 
-C_FLAGS += -I$(INCLUDE)
+PLATFORM_INCLUDE = core/$(PLATFORM)/include
+
+C_FLAGS += -I$(INCLUDE) -I$(PLATFORM_INCLUDE)
 
 OBJ_MAIN_TESTS = main_test.o
 BIN_MAIN_TESTS = main_test.bin
